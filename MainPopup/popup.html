@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Popup html</title>
+  <style>
+	:root {
+            --redBorder: rgb(255,0,0);
+            --redBackground: rgb(250,220,220);
+            --greenBorder: rgb(34,177,76);
+            --greenBackground: rgb(220,250,220);
+            --greyBorder: rgb(100,100,100);
+            --greyBackground: rgb(230,230,230);
+            --textColor: rgb(50,50,50);
+
+            --borderColor: var(--greyBorder);
+            --backgroundColor: var(--greyBackground);
+        }
+        body {
+            background-color: var(--borderColor);
+            padding: 0px;
+            margin: 0px;
+        }
+        #window {
+            width: 300px;
+            height: 150px;
+            margin: 0px;
+            padding: 0px;
+            border-style: groove;
+            border-radius: 10px;
+            border-color: var(--borderColor);
+            background-color: var(--backgroundColor);
+            font-family: Verdana;
+        }
+        h1 {
+            margin-top: 10px;
+            margin-bottom: 0px;
+            font-size: 30px;
+            color: var(--textColor);
+            text-align: center;
+        }
+        .score {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 5px;
+            width: 300px;
+            height: 75px;
+        }
+        #points {
+            margin-top: 35px;
+            margin-bottom: 0px;
+            font-size: 20px;
+            color: var(--textColor);
+            text-align: center;
+        }
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            width: 290px;
+        }        
+        a {
+            margin-left: 10px;
+            text-align: left;
+            font-size: 15px;
+        }
+        .logo {
+            margin: 0px;
+            white-space: nowrap;
+        }
+        .logoItem {
+            display: inline-block;
+        }
+        p {
+            margin: 0px;
+            font-size: 15px;
+            color: var(--textColor);
+        }
+  </style>
+  <script src="libraries/p5.js"></script>
+  <script src="sketch.js"></script>
+</head>
+
+<body>
+	<div id="window">
+        <h1>Fake news rate</h1>
+        <div class="score">
+            <img src="assets/neutral.gif" id="owl" style="width: 75px; height: 75px;">
+            <p id="points">51/100</p>
+            <img src="assets/neutral.png" id="sign" style="height: 75px;" title="not defined">
+        </div>
+        <div class="toolbar">
+            <a href="../EducationPage/index.html" target="popup">more...</a>
+            <div class="logo">
+                <img class="logoItem" src="assets/logo.png" style="height: 17px;">
+                <p class="logoItem">Truth seekers</p>
+            </div>
+            <a href="../settings/options.html" target="_blank">
+				<img src="assets/settings.png" style="height: 15px;">
+			</a>
+        </div>    
+    </div>
+</body>
+
+</html>

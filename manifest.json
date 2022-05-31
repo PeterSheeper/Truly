@@ -17,7 +17,11 @@
     {
       "matches": ["*://twitter.com/*"],
       "js": ["TwitterParser/jquery-3.6.0.js", "TwitterParser/twitterify.js"],
-	    "css": ["TwitterParser/tooltip.css"]
+	   "css": ["TwitterParser/tooltip.css"]
+    },
+	{
+      "matches": ["file://*/*"],
+      "js": ["ArticleParser/articler.js"]
     }
   ],
   "options_ui": {

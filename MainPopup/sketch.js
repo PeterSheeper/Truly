@@ -19,18 +19,19 @@ function setup() {
 function draw(){
 }
 
-
 function changeViewByPoints(points){
 	var root = document.documentElement;
 	var owl = document.getElementById("owl");
 	var sign = document.getElementById("sign");
 
+	var howSetIcon = false;
 	if (points >= redTreshold) {
 		root.style.setProperty('--borderColor', getComputedStyle(root).getPropertyValue('--redBorder'));
 		root.style.setProperty('--backgroundColor', getComputedStyle(root).getPropertyValue('--redBackground'));
 		owl.setAttribute("src", "assets/negative.gif");
 		sign.setAttribute("src", "assets/negative.png");
 		sign.setAttribute("title", "potential fake news");
+		howSetIcon = true;
 	} else if (points < grayTreshold) {
 		root.style.setProperty('--borderColor', getComputedStyle(root).getPropertyValue('--greenBorder'));
 		root.style.setProperty('--backgroundColor', getComputedStyle(root).getPropertyValue('--greenBackground'));
@@ -44,6 +45,10 @@ function changeViewByPoints(points){
 		sign.setAttribute("src", "assets/neutral.png");
 		sign.setAttribute("title", "not defined");
 	}
+	chrome.runtime.sendMessage({
+      action: 'updateIcon',
+      value: howSetIcon
+    });
 }
 
 function setFontSize(){
@@ -89,7 +94,7 @@ function updateScore() {
 	  chrome.tabs.sendMessage(tabs[0].id,
 	  {msg: "getPoints"},
 	  function(response) {
-		if(response.msg == "updatePoints"){
+		if(response?.msg == "updatePoints"){
 		  let display = document.getElementById('points');
 		  display.innerText = response.points + '/100';
 		  changeViewByPoints(response.points);

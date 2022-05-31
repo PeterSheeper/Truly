@@ -1,5 +1,4 @@
 const insertedIconDivClass = 'tooltip';
-const insertedIconSrc = 'TwitterParser/logo-48.png';
 const insertedIconHeight = 20;
 
 const userPopupClass = 'tooltiptext';
@@ -21,7 +20,13 @@ function insertIcons(){
 		
 		function createIcon(){
 			let icon = document.createElement('img');
-			icon.src = chrome.runtime.getURL(insertedIconSrc);
+      let iconNumber = Math.floor(Math.random() * 3);
+		  if (iconNumber == 0)
+        icon.src = chrome.runtime.getURL("TwitterParser/not-defined.png");
+		  else if (iconNumber == 1)
+        icon.src = chrome.runtime.getURL("TwitterParser/verified.png");
+		  else if (iconNumber == 2)
+        icon.src = chrome.runtime.getURL("TwitterParser/bot-alert.png");
 			icon.alt = "Fake news icon"
 			icon.height = insertedIconHeight;
 			return icon;

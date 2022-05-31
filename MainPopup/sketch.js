@@ -1,5 +1,12 @@
+const fontSizeStorageId = 'addOnFontSize';
+const owlVisiblityStorageId = 'owlVisible';
+const alertStorageId = 'alertEnabled';
+
+const defaultFontSize = '20'
+
 function preload(){
   setFontSize();
+  setOwlVisibility();
   changeViewOnKey();
   updateScore();
 }
@@ -55,7 +62,7 @@ function changeViewOnKey(){
 
 function setFontSize(){
 	function onGot(item) {
-	  let size = "20";
+	  let size = defaultFontSize;
 	  if (item.addOnFontSize) {
 		size = item.addOnFontSize;
 	  }
@@ -63,6 +70,32 @@ function setFontSize(){
 	}
 
 	chrome.storage.sync.get('addOnFontSize', onGot);
+}
+
+function setOwlVisibility(){
+	function onGot(item) {
+	  let displayOwl = 'block';
+	  if (item.owlVisible != null) {
+		if(item.owlVisible == false)
+			displayOwl = 'none'
+	  }
+	  document.querySelector('#owl').style.display = displayOwl;
+	}
+
+	chrome.storage.sync.get('owlVisible', onGot);
+}
+
+function setAlertEnabled(){
+	function onGot(item) {
+	  let alertEn = true;
+	  if (item.alertEnabled != null) {
+		if(item.alertEnabled == false)
+			alertEn = false;
+	  }
+	  // Alert.enabled = alertEn
+	}
+
+	chrome.storage.sync.get('alertEnabled', onGot);
 }
 
 function updateScore() {

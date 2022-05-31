@@ -16,11 +16,5 @@ chrome.runtime.onMessage.addListener(
 				points : scorePoints
 			});
 		}
-		if(chrome.runtime.lastError) {
-		    // Something went wrong
-    		console.warn("Whoops.. " + chrome.runtime.lastError.message);
-		} else {
-    		// No errors
-		}
 	}
 );

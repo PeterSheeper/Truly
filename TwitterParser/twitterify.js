@@ -5,15 +5,13 @@ const insertedIconHeight = 20;
 const userPopupClass = 'tooltiptext';
 const userPopupText = 'Placeholder';
 
-const userHeaderClass = 'css-1dbjc4n r-1wbh5a2 r-dnmrzs r-1ny4l3l';
 const tweetHeaderClass = 'css-1dbjc4n r-1d09ksm r-18u37iz r-1wbh5a2';
 const userLogoClass = 'css-9pa8cd';
-const twitterPostsPageDivClass = 'css-1dbjc4n r-kemksi r-1kqtdi0 r-1ljd8xs r-13l2t4g r-1phboty r-1jgb5lz r-11wrixw r-61z16t r-1ye8kvj r-13qz1uu r-184en5c';
 
 const timeToActivateObserver = 2000 // in ms
 
 function insertIcons(){
-	function addOurIcon(twPost){
+	function addOurIcon(tweetId){
 		function createUserPopup(){
 			let userPopup = document.createElement('span');
 			userPopup.classList.add(userPopupClass);
@@ -37,18 +35,29 @@ function insertIcons(){
 			return div;
 		}
 		
-		if(twPost.querySelector('.'.concat(insertedIconDivClass)))
-			return;							
-		var userHeaders = twPost.getElementsByClassName(userHeaderClass);
-		if(userHeaders == null || userHeaders.length == 0)
+		function postText(jQueryThisObj){
+			let texts = jQueryThisObj.find($('[data-testid="tweetText"]'));
+			$.post("http://127.0.0.1:5000/is_fake",
+			{
+				content: texts[0].innerText
+			},
+			function(data, status){
+				console.log(data);
+				return data;
+			});
+		}
+		
+		let tweetHeaders = $(this).find($('[class="' + tweetHeaderClass + '"]'));
+		if($(this).find('.'.concat(insertedIconDivClass)).length != 0)
 			return;
-		twPost.appendChild(createDivToInsert());
+		if(tweetHeaders.length != 1)
+			return;
+		postText($(this));
+		tweetHeaders[0].appendChild(createDivToInsert());
 	}
 	
-	let userIntrosCollection = document.getElementsByClassName(tweetHeaderClass);
-	Array.prototype.forEach.call(userIntrosCollection, function(userIntro){
-		addOurIcon(userIntro);
-	});
+	let tweets = $('[data-testid="tweet"]');
+	tweets.each(addOurIcon);
 }
 
 function checkMutations(mutations){
@@ -63,8 +72,8 @@ function checkMutations(mutations){
 }
 
 function addObserver(){
-	const parents = document.getElementsByClassName(twitterPostsPageDivClass);
-	mutationObserver.observe(parents[0], {attributes: false, childList: true, characterData: false, subtree:true});
+	const primaryColumns = $('[role="main"]');
+	mutationObserver.observe(primaryColumns[0], {attributes: false, childList: true, characterData: false, subtree:true});
 }
 
 const mutationObserver = new MutationObserver(checkMutations);

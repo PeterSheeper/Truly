@@ -12,7 +12,7 @@
   "content_scripts": [
     {
       "matches": ["*://twitter.com/*"],
-      "js": ["TwitterParser/twitterify.js"],
+      "js": ["TwitterParser/jquery-3.6.0.js", "TwitterParser/twitterify.js"],
 	  "css": ["TwitterParser/tooltip.css"]
     }
   ],
@@ -20,7 +20,7 @@
     "page": "Settings/options.html"
   },
 
-  "permissions": ["storage"],
+  "permissions": ["*://*127.0.0.1:5000/*", "storage"],
 
   "browser_specific_settings": {
     "gecko": {

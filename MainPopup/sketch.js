@@ -19,7 +19,6 @@ function setup() {
 function draw(){
 }
 
-
 function changeViewByPoints(points){
 	var root = document.documentElement;
 	var owl = document.getElementById("owl");
@@ -31,18 +30,30 @@ function changeViewByPoints(points){
 		owl.setAttribute("src", "assets/negative.gif");
 		sign.setAttribute("src", "assets/negative.png");
 		sign.setAttribute("title", "potential fake news");
+		chrome.runtime.sendMessage({
+      action: 'updateIcon',
+      value: true
+    });
 	} else if (points < grayTreshold) {
 		root.style.setProperty('--borderColor', getComputedStyle(root).getPropertyValue('--greenBorder'));
 		root.style.setProperty('--backgroundColor', getComputedStyle(root).getPropertyValue('--greenBackground'));
 		owl.setAttribute("src", "assets/positive.gif");
 		sign.setAttribute("src", "assets/positive.png");
 		sign.setAttribute("title", "verified");
+		chrome.runtime.sendMessage({
+      action: 'updateIcon',
+      value: false
+    });
 	} else{
 		root.style.setProperty('--borderColor', getComputedStyle(root).getPropertyValue('--greyBorder'));
 		root.style.setProperty('--backgroundColor', getComputedStyle(root).getPropertyValue('--greyBackground'));
 		owl.setAttribute("src", "assets/neutral.gif");
 		sign.setAttribute("src", "assets/neutral.png");
 		sign.setAttribute("title", "not defined");
+		chrome.runtime.sendMessage({
+      action: 'updateIcon',
+      value: false
+    });
 	}
 }
 
@@ -89,7 +100,7 @@ function updateScore() {
 	  chrome.tabs.sendMessage(tabs[0].id,
 	  {msg: "getPoints"},
 	  function(response) {
-		if(response.msg == "updatePoints"){
+		if(response?.msg == "updatePoints"){
 		  let display = document.getElementById('points');
 		  display.innerText = response.points + '/100';
 		  changeViewByPoints(response.points);

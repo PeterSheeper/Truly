@@ -18,37 +18,49 @@ function insertIcons(){
 			return userPopup;
 		}
 		
-		function createIcon(){
+		function createIcon(isTrue){
 			let icon = document.createElement('img');
-      let iconNumber = Math.floor(Math.random() * 3);
-		  if (iconNumber == 0)
-        icon.src = chrome.runtime.getURL("TwitterParser/not-defined.png");
-		  else if (iconNumber == 1)
-        icon.src = chrome.runtime.getURL("TwitterParser/verified.png");
-		  else if (iconNumber == 2)
-        icon.src = chrome.runtime.getURL("TwitterParser/bot-alert.png");
+			icon.id = 'fakeIcon'
+			icon.src = chrome.runtime.getURL("TwitterParser/not-defined.png");
 			icon.alt = "Fake news icon"
 			icon.height = insertedIconHeight;
 			return icon;
 		}
 		
-		function createDivToInsert(){
+		function createDivToInsert(isTrue){
 			let div = document.createElement('div');
 			div.classList.add(insertedIconDivClass);
-			div.appendChild(createIcon());
+			div.appendChild(createIcon(isTrue));
 			div.appendChild(createUserPopup());
 			return div;
 		}
 		
 		function postText(jQueryThisObj){
 			let texts = jQueryThisObj.find($('[data-testid="tweetText"]'));
-			$.post("http://127.0.0.1:5000/is_fake",
-			{
-				content: texts[0].innerText
-			},
-			function(data, status){
-				console.log(data);
-				return data;
+			return $.ajax({
+				type: 'POST',
+				url: 'http://127.0.0.1:5000/is_fake',
+				data: JSON.stringify({
+					"content": texts[0].innerText
+				}),
+				success: function(data){
+					console.log('success');
+				},
+				error: function(data){
+					console.log('error');
+				},
+				contentType: "application/json",
+			});
+		}
+		
+		function changeIconIfFake(jQueryThisObj){
+			let promise = postText(jQueryThisObj);
+			promise.then(function(isFake){
+				let icon = tweetHeaders.find('#fakeIcon')[0];
+				if (isFake)
+					icon.src = chrome.runtime.getURL("TwitterParser/bot-alert.png");
+				else
+					icon.src = chrome.runtime.getURL("TwitterParser/verified.png");
 			});
 		}
 		
@@ -57,8 +69,8 @@ function insertIcons(){
 			return;
 		if(tweetHeaders.length != 1)
 			return;
-		postText($(this));
-		tweetHeaders[0].appendChild(createDivToInsert());
+		tweetHeaders[0].appendChild(createDivToInsert(false));
+		changeIconIfFake($(this));
 	}
 	
 	let tweets = $('[data-testid="tweet"]');

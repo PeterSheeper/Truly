@@ -28,7 +28,7 @@
     "page": "Settings/options.html"
   },
 
-  "permissions": ["*://*127.0.0.1:5000/*", "storage"],
+  "permissions": ["storage"],
 
   "background":{
 	"scripts": ["background.js"]  

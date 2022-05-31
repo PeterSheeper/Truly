@@ -9,7 +9,10 @@ function insertIcons(){
 		let div = document.createElement('div');
 		div.classList.add("tooltip");
 		let icon = document.createElement('img');
-		icon.src = chrome.runtime.getURL("TwitterParser/logo-48.png");
+		let iconNumber = Math.floor(Math.random() * 3);
+		if (iconNumber == 0) icon.src = chrome.runtime.getURL("TwitterParser/not-defined.png");
+		else if (iconNumber == 1) icon.src = chrome.runtime.getURL("TwitterParser/verified.png");
+		else if (iconNumber == 2) icon.src = chrome.runtime.getURL("TwitterParser/bot-alert.png");
 		icon.alt = "Fake news icon"
 		icon.height = 20;
 		let tooltip = document.createElement('span');

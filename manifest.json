@@ -8,12 +8,16 @@
     "48": "Icons/logo-48.png",
     "96": "Icons/logo-96.png"
   },
-  "web_accessible_resources":["TwitterParser/logo-48.png"],
+  "web_accessible_resources": [
+    "TwitterParser/not-defined.png",
+    "TwitterParser/verified.png",
+    "TwitterParser/bot-alert.png"
+  ],
   "content_scripts": [
     {
       "matches": ["*://twitter.com/*"],
       "js": ["TwitterParser/twitterify.js"],
-	  "css": ["TwitterParser/tooltip.css"]
+	    "css": ["TwitterParser/tooltip.css"]
     }
   ],
   "options_ui": {
@@ -22,11 +26,6 @@
 
   "permissions": ["storage"],
 
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "fakenews@truthseekers.edu"
-	}
-  },
   "background":{
 	"scripts": ["background.js"]  
   },

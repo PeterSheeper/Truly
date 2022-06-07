@@ -70,7 +70,7 @@ function insertIcons(){
 			let promise = postText(jQueryThisObj);
 			promise.then(function(isFake){
 				let icon = tweetHeaders.find('#fakeIcon')[0];
-				if (isFake)
+				if (isFake == "true")
 					icon.src = chrome.runtime.getURL("TwitterParser/bot-alert.png");
 				else
 					icon.src = chrome.runtime.getURL("TwitterParser/verified.png");

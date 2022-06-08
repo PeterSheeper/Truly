@@ -28,10 +28,13 @@
     "page": "Settings/options.html"
   },
 
-  "permissions": ["storage"],
+  "permissions": [
+    "storage",
+    "contextMenus"
+  ],
 
   "background":{
-	"scripts": ["background.js"]  
+	"scripts": ["background.js", "moderator.js"]
   },
   "browser_action":{
 	  "default_icon":{

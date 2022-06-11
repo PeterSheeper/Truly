@@ -5,16 +5,22 @@ const alertCheckBoxId = '#AlrtChckBox';
 
 function restoreOptions() {
   function setFontSize(fontSize) {
-	document.querySelector(meterFontSliderId).value = fontSize.addOnFontSize;
-	document.querySelector(meterFontInputId).value = fontSize.addOnFontSize;
+	document.querySelector(meterFontSliderId).value = fontSize.addOnFontSize || defaultFontSize;
+	document.querySelector(meterFontInputId).value = fontSize.addOnFontSize || defaultFontSize;
   }
   
   function setOwlVisibilityCheckBox(check){
-	  document.querySelector(owlCheckBoxId).checked = check.owlVisible;
+	  let checked = check.owlVisible;
+	  if(checked == null)
+		  checked = true;
+	  document.querySelector(owlCheckBoxId).checked = checked;
   }
   
   function setAlertCheckBox(check){
-	  document.querySelector(alertCheckBoxId).checked = check.alertEnabled;
+	  let checked = check.owlVisible;
+	  if(checked == null)
+		  checked = true;
+	  document.querySelector(alertCheckBoxId).checked = checked;
   }
 
   chrome.storage.sync.get("addOnFontSize", setFontSize);

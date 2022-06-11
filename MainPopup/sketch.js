@@ -67,7 +67,7 @@ function setOwlVisibility(){
 	function onGot(item) {
 	  let displayOwl = 'block';
 	  if (item.owlVisible != null) {
-		if(item.owlVisible == false)
+		if(item.owlVisible === false)
 			displayOwl = 'none'
 	  }
 	  document.querySelector('#owl').style.display = displayOwl;
@@ -80,7 +80,7 @@ function setAlertEnabled(){
 	function onGot(item) {
 	  let alertEn = true;
 	  if (item.alertEnabled != null) {
-		if(item.alertEnabled == false)
+		if(item.alertEnabled === false)
 			alertEn = false;
 	  }
 	  // Alert.enabled = alertEn
@@ -94,7 +94,7 @@ function updateScore() {
 	  chrome.tabs.sendMessage(tabs[0].id,
 	  {msg: "getPoints"},
 	  function(response) {
-		if(response?.msg == "updatePoints"){
+		if(response?.msg === "updatePoints"){
 		  let display = document.getElementById('points');
 		  display.innerText = response.points + '/100';
 		  changeViewByPoints(response.points);

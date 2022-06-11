@@ -10,7 +10,7 @@ const userLogoClass = 'css-9pa8cd';
 const timeToActivateObserver = 2000 // in ms
 
 function insertIcons(){
-	function addOurIcon(tweetId){
+	function addOurIcon(){
 		function createUserPopup(){
 			let userPopup = document.createElement('span');
 			userPopup.classList.add(userPopupClass);
@@ -56,10 +56,10 @@ function insertIcons(){
 				data: JSON.stringify({
 					"content": texts[0].innerText
 				}),
-				success: function(data){
+				success: function(){
 					console.log('success');
 				},
-				error: function(data){
+				error: function(){
 					console.log('error');
 				},
 				contentType: "application/json",
@@ -70,7 +70,7 @@ function insertIcons(){
 			let promise = postText(jQueryThisObj);
 			promise.then(function(isFake){
 				let icon = tweetHeaders.find('#fakeIcon')[0];
-				if (isFake == "true")
+				if (isFake === "true")
 					icon.src = chrome.runtime.getURL("TwitterParser/bot-alert.png");
 				else
 					icon.src = chrome.runtime.getURL("TwitterParser/verified.png");
@@ -78,9 +78,9 @@ function insertIcons(){
 		}
 		
 		let tweetHeaders = $(this).find($('[class="' + tweetHeaderClass + '"]'));
-		if($(this).find('.'.concat(insertedIconDivClass)).length != 0)
+		if($(this).find('.'.concat(insertedIconDivClass)).length !== 0)
 			return;
-		if(tweetHeaders.length != 1)
+		if(tweetHeaders.length !== 1)
 			return;
 		tweetHeaders[0].appendChild(createDivToInsert(false));
 		changeIconIfFake($(this));
@@ -94,7 +94,7 @@ function checkMutations(mutations){
 	mutations.forEach(function(mutation) {
 		if(mutation.addedNodes)
 		mutation.addedNodes.forEach(function(added_node) {
-			if(added_node.nodeName == 'IMG' && added_node.classList.contains(userLogoClass)) {
+			if(added_node.nodeName === 'IMG' && added_node.classList.contains(userLogoClass)) {
 				insertIcons();
 			}
 		});

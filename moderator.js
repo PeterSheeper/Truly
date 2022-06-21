@@ -1,25 +1,12 @@
-var contextMenuTrue = {
+var contextMenu = {
     "id": "truly-report-t",
-    "title": "Report as true",
+    "title": "Request moderation",
     "contexts": ["selection"],
-    "onclick": reportSelectionAsTrue
+    "onclick": reportSelection
 }
 
-chrome.contextMenus.create(contextMenuTrue);
+chrome.contextMenus.create(contextMenu);
 
-function reportSelectionAsTrue(highlighted) {
-    console.log(highlighted.selectionText + " true");
-}
-
-var contextMenuFalse = {
-    "id": "truly-report-f",
-    "title": "Report as false",
-    "contexts": ["selection"],
-    "onclick": reportSelectionAsFalse
-}
-
-chrome.contextMenus.create(contextMenuFalse);
-
-function reportSelectionAsFalse(highlighted) {
-    console.log(highlighted.selectionText + " false");
+function reportSelection(highlighted) {
+    console.log(highlighted.selectionText);
 }

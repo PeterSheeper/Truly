@@ -3,8 +3,8 @@ const owlVisiblityStorageId = 'owlVisible';
 const alertStorageId = 'alertEnabled';
 
 const defaultFontSize = '20'
-const redTreshold = 60
-const grayTreshold = 30
+const redTreshold = 40
+const grayTreshold = 20
 
 function preload(){
   setFontSize();
@@ -38,7 +38,7 @@ function changeViewByPoints(points){
 		owl.setAttribute("src", "assets/positive.gif");
 		sign.setAttribute("src", "assets/positive.png");
 		sign.setAttribute("title", "verified");
-	} else{
+	} else {
 		root.style.setProperty('--borderColor', getComputedStyle(root).getPropertyValue('--greyBorder'));
 		root.style.setProperty('--backgroundColor', getComputedStyle(root).getPropertyValue('--greyBackground'));
 		owl.setAttribute("src", "assets/neutral.gif");
@@ -96,9 +96,24 @@ function updateScore() {
 	  function(response) {
 		if(response?.msg === "updatePoints"){
 		  let display = document.getElementById('points');
-		  display.innerText = response.points + '/100';
+		  display.innerText = response.points;
 		  changeViewByPoints(response.points);
 		}
 	  });
 	});
 }
+
+chrome.runtime.onMessage.addListener(
+	function(request, sender, sendResponse){
+		if (request.msg === "updatePoints"){
+			function updatePoints(){
+				let display = document.getElementById('points');
+				display.innerText = sender.msg.points;
+				changeViewByPoints(sender.msg.points);
+			}
+		}
+		if(chrome.runtime.lastError) {
+			console.warn("Whoops.. " + chrome.runtime.lastError.message); // Something went wrong
+		}
+	}
+);

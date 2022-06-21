@@ -9,6 +9,9 @@ const userLogoClass = 'css-9pa8cd';
 
 const timeToActivateObserver = 2000 // in ms
 
+let negative = 0;
+let all = 0;
+
 function insertIcons(){
 	function addOurIcon(){
 		function createUserPopup(){
@@ -60,10 +63,10 @@ function insertIcons(){
 					"date": "2022-06-21T10:30:40"
 				}),
 				success: function(){
-					console.log('success');
+					//console.log('success');
 				},
 				error: function(){
-					console.log('error');
+					//console.log('error');
 				},
 				contentType: "application/json",
 			});
@@ -73,10 +76,12 @@ function insertIcons(){
 			let promise = postText(jQueryThisObj);
 			promise.then(function(isFake){
 				console.log(isFake);
+				all = all + 1;
 				let icon = tweetHeaders.find('#fakeIcon')[0];
-				if (isFake === 0)
+				if (isFake === 0){
 					icon.src = chrome.runtime.getURL("TwitterParser/bot-alert.png");
-				else if (isFake === 1)
+					negative = negative + 1;
+				}else if (isFake === 1)
 					icon.src = chrome.runtime.getURL("TwitterParser/opinion.png");
 				else if (isFake === 2)
 					icon.src = chrome.runtime.getURL("TwitterParser/verified.png");
@@ -115,3 +120,26 @@ function addObserver(){
 const mutationObserver = new MutationObserver(checkMutations);
 const myTimeout = setTimeout(addObserver, timeToActivateObserver);
 
+chrome.runtime.onMessage.addListener(
+	function(request, sender, sendResponse){
+		if (request.msg === "getPoints"){
+			function calcPoints(){
+				if(all === 0)
+					return 0;
+				return Math.round(100* negative / all);
+			}
+			let scorePoints = calcPoints();
+			console.log(scorePoints);
+			sendResponse({
+				msg: "updatePoints",
+				points : scorePoints
+			});
+		}
+		if(chrome.runtime.lastError) {
+			// Something went wrong
+			console.warn("Whoops.. " + chrome.runtime.lastError.message);
+		} else {
+			// No errors
+		}
+	}
+);

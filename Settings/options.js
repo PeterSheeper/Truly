@@ -3,6 +3,8 @@ const meterFontInputId = '#FntSzIn';
 const owlCheckBoxId = '#OwlChckBox';
 const alertCheckBoxId = '#AlrtChckBox';
 
+const defaultFontSize = '20'
+
 function restoreOptions() {
   function setFontSize(fontSize) {
 	document.querySelector(meterFontSliderId).value = fontSize.addOnFontSize || defaultFontSize;
@@ -17,7 +19,7 @@ function restoreOptions() {
   }
   
   function setAlertCheckBox(check){
-	  let checked = check.owlVisible;
+	  let checked = check.alertEnabled;
 	  if(checked == null)
 		  checked = true;
 	  document.querySelector(alertCheckBoxId).checked = checked;

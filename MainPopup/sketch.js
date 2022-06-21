@@ -6,13 +6,18 @@ const defaultFontSize = '20'
 const redTreshold = 60
 const grayTreshold = 30
 
+let alertEnabled = true;
+let alert;
+
 function preload(){
   setFontSize();
   setOwlVisibility();
+  setAlertEnabled();
 }
 
 function setup() {
   noCanvas();
+  alert = new Audio(chrome.runtime.getURL('MainPopup/assets/danger.mp3'));
   updateScore();
 }
 
@@ -32,6 +37,8 @@ function changeViewByPoints(points){
 		sign.setAttribute("src", "assets/negative.png");
 		sign.setAttribute("title", "potential fake news");
 		howSetIcon = true;
+		if(alertEnabled)
+			alert.play();
 	} else if (points < grayTreshold) {
 		root.style.setProperty('--borderColor', getComputedStyle(root).getPropertyValue('--greenBorder'));
 		root.style.setProperty('--backgroundColor', getComputedStyle(root).getPropertyValue('--greenBackground'));
@@ -78,12 +85,10 @@ function setOwlVisibility(){
 
 function setAlertEnabled(){
 	function onGot(item) {
-	  let alertEn = true;
 	  if (item.alertEnabled != null) {
 		if(item.alertEnabled === false)
-			alertEn = false;
+			alertEnabled = false;
 	  }
-	  // Alert.enabled = alertEn
 	}
 
 	chrome.storage.sync.get('alertEnabled', onGot);

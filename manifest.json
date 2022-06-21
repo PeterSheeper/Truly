@@ -11,7 +11,8 @@
   "web_accessible_resources": [
     "TwitterParser/not-defined.png",
     "TwitterParser/verified.png",
-    "TwitterParser/bot-alert.png"
+    "TwitterParser/bot-alert.png",
+    "MainPopup/assets/danger.mp3"
   ],
   "content_scripts": [
     {

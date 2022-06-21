@@ -10,6 +10,7 @@
   },
   "web_accessible_resources": [
     "TwitterParser/not-defined.png",
+    "TwitterParser/opinion.png",
     "TwitterParser/verified.png",
     "TwitterParser/bot-alert.png",
     "MainPopup/assets/danger.mp3"

@@ -101,7 +101,7 @@ function updateScore() {
 	  function(response) {
 		if(response?.msg === "updatePoints"){
 		  let display = document.getElementById('points');
-		  display.innerText = response.points + '/100';
+		  display.innerText = response.points + ' %';
 		  changeViewByPoints(response.points);
 		}
 	  });

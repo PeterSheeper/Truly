@@ -34,7 +34,7 @@
   ],
 
   "background":{
-	"scripts": ["background.js", "moderator.js"]
+	"scripts": ["TwitterParser/jquery-3.6.0.js","background.js", "moderator.js"]
   },
   "browser_action":{
 	  "default_icon":{
